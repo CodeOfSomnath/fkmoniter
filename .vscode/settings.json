@@ -3,6 +3,7 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "/mnt/data/lib/jar/jsoup-1.18.1.jar"
+        "/mnt/data/lib/jar/jsoup-1.18.1.jar",
+        "/mnt/data/lib/jar/flatlaf-3.5.2.jar"
     ]
 }
