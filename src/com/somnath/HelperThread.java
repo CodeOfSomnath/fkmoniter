@@ -21,7 +21,7 @@ public class HelperThread extends Thread {
     public void refresh() {
         
         try {
-            page.getPage();
+            page.updatePage();
             Thread.sleep(Duration.ofSeconds(10));
         } catch (Exception e) {
             // canExit = true;

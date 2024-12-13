@@ -26,6 +26,18 @@ public class WebCrawler {
         this.soup = soup;
     }
 
+    public void updatePage() {
+        try {
+            refresh();
+            getCurrentPrice();
+            getFullPrice();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
     public void refresh() throws Exception {
         // it is just look good
         this.getPage();

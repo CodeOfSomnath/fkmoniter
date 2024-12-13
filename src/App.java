@@ -1,13 +1,62 @@
 
+import java.util.Scanner;
 import com.somnath.*;
 
 public class App {
+
+    static void printUsage() {
+        System.out.println("This is the options for moniter: ");
+        System.out.println("\t1. Add Url");
+        System.out.println("\t2. Show Urls");
+        System.out.println("\t3. Remove Url");
+        System.out.println("\t4. Re-activate Url");
+        System.out.println("\t5. Print Usage");
+        System.out.println("\t0. Exit");
+    }
+
     public static void main(String[] args) throws Exception {
-        String url = "https://www.flipkart.com/triggr-ultrabuds-n1-neo-enc-40hr-playback-13mm-drivers-rich-bass-fast-charging-bluetooth/p/itm39cb3c540b4c6?pid=ACCH2WWTUZNGGDVC&lid=LSTACCH2WWTUZNGGDVCPEWLUQ&marketplace=FLIPKART&store=0pm%2Ffcn&srno=b_1_2&otracker=browse&fm=organic&iid=en_e4Sokmme-_i3H9O3_B3kRdfrUCwy9l659Sdrf8MwZKb3tYIAcGggrOsgWlqI5japvEtNvvRklpr0gJU2UuC1ufUFjCTyOHoHZs-Z5_PS_w0%3D&ppt=browse&ppn=browse&ssid=c5l91ppb0g0000001732214749900";
-        // WebCrawler crawler = new WebCrawler(url);
-        // System.out.println(crawler.getCurrentPrice());
-        // System.out.println(crawler.getFullPrice());
         Monitor mon = new Monitor();
-        mon.display();
+        Scanner sc = new Scanner(System.in);
+        int option, id;
+        String url;
+        printUsage();
+        while (true) {
+            mon.refresh();
+            System.out.println("\nEnter your option(0-5): ");
+            option = sc.nextInt();
+            sc.nextLine();
+            if (option == 0) {
+                // exit the system
+                break;
+            } else if (option == 1) {
+                // add url
+                System.out.println("Enter url:");
+                url = sc.nextLine();
+                mon.addUrl(url);
+            } else if (option == 2) {
+                // show urls
+                System.out.println("\nActive Urls:");
+                mon.display();
+                System.out.println("\nDead Urls:");
+                mon.displayDeadUrls();
+
+            } else if (option == 3) {
+                // remove url
+                System.out.println("Enter url id:");
+                id = sc.nextInt();
+                mon.removeUrl(id);
+            } else if (option == 4) {
+                // re-activate url
+                System.out.println("Enter url id:");
+                id = sc.nextInt();
+                mon.enableUrl(id);
+            } else if (option == 5) {
+                // print usage
+                printUsage();
+            }
+        }
+
+        sc.close();
+
     }
 }
