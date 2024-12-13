@@ -20,8 +20,7 @@ public class HelperThread extends Thread {
             page.updatePage();
             Thread.sleep(Duration.ofSeconds(10));
         } catch (Exception e) {
-            // canExit = true;
-            // e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

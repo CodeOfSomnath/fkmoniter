@@ -42,7 +42,6 @@ public class Products {
             getCurrentPrice();
             getFullPrice();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -53,7 +52,6 @@ public class Products {
         try {
             this.getPage();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

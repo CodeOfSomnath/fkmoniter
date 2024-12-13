@@ -35,6 +35,10 @@ public class Monitor {
         }
     }
 
+    /**
+     * Prints the products which price are low or match for a expected price
+     * 
+     */
     public void matchPriceUrls() {
         Products page;
         System.out.println("-".repeat(80));
@@ -50,6 +54,9 @@ public class Monitor {
         }
     }
 
+    /**
+     * This display the urls which are removed by user
+     */
     public void displayDeadUrls() {
         Products page;
         System.out.println("-".repeat(80));
@@ -64,8 +71,11 @@ public class Monitor {
         }
     }
 
+    /**
+     * This is used to refresh all urls which are in urls hashmap
+     */
     public void refresh() {
-        // Todo: This function will be used to refresh the data from server using threads
+        // This function will be used to refresh the data from server using threads
         // HelperThread thread;
         Products page;
         latch = new CountDownLatch(urls.keySet().size());
@@ -92,7 +102,11 @@ public class Monitor {
     }
 
     
-
+    /**
+     * This add url to urls hashmap
+     * @param url - A valid url which is starting with https or http
+     * @param expactedPrice - Minimum expacted price for this product
+     */
     public void addUrl(String url, int expactedPrice) {
         Products crawler = new Products(url, expactedPrice);
         urls.put(id, crawler);
@@ -100,11 +114,21 @@ public class Monitor {
         id++;
     }
 
+
+
+    /**
+     * Remove urls from urls HashMap and put them in deadUrls
+     * @param id - product id
+     */
     public void removeUrl(int id) {
         Products page = urls.remove(id);
         deadUrls.put(id, page);
     }
 
+    /**
+     * This is enable the url which are currently not activate
+     * @param id - product id
+     */
     public void enableUrl(int id) {
         Products page = deadUrls.remove(id);
         urls.put(id, page);
