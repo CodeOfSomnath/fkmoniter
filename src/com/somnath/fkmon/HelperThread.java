@@ -1,20 +1,15 @@
-package com.somnath;
+package com.somnath.fkmon;
 
 import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
-import javax.swing.JOptionPane;
 
 // This class for helping page refresh like task
 public class HelperThread extends Thread {
-    private boolean canExit = false;
     private CountDownLatch latch;
-    private WebCrawler page;
+    private Products page;
 
-    void exit() {
-        canExit = true;
-    }
 
-    public HelperThread(CountDownLatch latch, WebCrawler crawler) {
+    public HelperThread(CountDownLatch latch, Products crawler) {
         page = crawler;
         this.latch = latch;
     }

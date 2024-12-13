@@ -1,30 +1,30 @@
-package com.somnath;
+package com.somnath.fkmon;
 
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 
-import javax.swing.JOptionPane;
-
 public class Monitor {
     private int id;
     private CountDownLatch latch;
-
-    private HashMap<Integer, WebCrawler> pages;
-    private HashMap<Integer, WebCrawler> deadPages;
-    private HashMap<Integer, WebCrawler> matchPages;
+    private HashMap<Integer, Products> urls;
+    private HashMap<Integer, Products> deadUrls;
+    private HashMap<Integer, Products> matchedUrls;
 
     public Monitor() {
         id = 0;
-        pages = new HashMap<>();
-        deadPages = new HashMap<>();
-        matchPages = new HashMap<>();
+        urls = new HashMap<>();
+        deadUrls = new HashMap<>();
+        matchedUrls = new HashMap<>();
     }
 
+    /**
+     * Displays the products which are currently actives
+     */
     public void display() {
-        WebCrawler page;
+        Products page;
         System.out.println("-".repeat(80));
-        for (int key : pages.keySet()) {
-            page = pages.get(key);
+        for (int key : urls.keySet()) {
+            page = urls.get(key);
             System.out.printf("ID: %d\nPRODUCT_NAME: %s\nCURRENT_PRICE: Rs.%d\nMAX_PRICE: Rs.%d\nEXPACTED_PRICE:%d\n",
                     key,
                     page.getDocument().title(),
@@ -36,10 +36,10 @@ public class Monitor {
     }
 
     public void matchPriceUrls() {
-        WebCrawler page;
+        Products page;
         System.out.println("-".repeat(80));
-        for (int key : matchPages.keySet()) {
-            page = matchPages.get(key);
+        for (int key : matchedUrls.keySet()) {
+            page = matchedUrls.get(key);
             System.out.printf("ID: %d\nPRODUCT_NAME: %s\nCURRENT_PRICE: Rs.%d\nMAX_PRICE: Rs.%d\nEXPACTED_PRICE:%d\n",
                     key,
                     page.getDocument().title(),
@@ -51,10 +51,10 @@ public class Monitor {
     }
 
     public void displayDeadUrls() {
-        WebCrawler page;
+        Products page;
         System.out.println("-".repeat(80));
-        for (int key : deadPages.keySet()) {
-            page =  deadPages.get(key);
+        for (int key : deadUrls.keySet()) {
+            page =  deadUrls.get(key);
             System.out.printf("ID: %d\nPRODUCT_NAME: %s\nCURRENT_PRICE: Rs.%d\nMAX_PRICE: Rs.%d\nEXPACTED_PRICE:%d\n",
                     key,
                     page.getDocument().title(),
@@ -67,25 +67,24 @@ public class Monitor {
     public void refresh() {
         // Todo: This function will be used to refresh the data from server using threads
         // HelperThread thread;
-        WebCrawler page;
-        latch = new CountDownLatch(pages.keySet().size());
-        for (int key: pages.keySet()) {
-            page = pages.get(key);
+        Products page;
+        latch = new CountDownLatch(urls.keySet().size());
+        for (int key: urls.keySet()) {
+            page = urls.get(key);
             new HelperThread(latch, page).start();
         }
 
         try {
             latch.await();
-            for (int key: pages.keySet()) {
-                page = pages.get(key);
+            for (int key: urls.keySet()) {
+                page = urls.get(key);
                 if (page.getExpactedPrice() >= page.getCurrentPrice()) {
-                    matchPages.put(key, page);
-                    pages.remove(key);
+                    matchedUrls.put(key, page);
+                    urls.remove(key);
                 }
             }
             
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
@@ -95,20 +94,20 @@ public class Monitor {
     
 
     public void addUrl(String url, int expactedPrice) {
-        WebCrawler crawler = new WebCrawler(url, expactedPrice);
-        pages.put(id, crawler);
+        Products crawler = new Products(url, expactedPrice);
+        urls.put(id, crawler);
     
         id++;
     }
 
     public void removeUrl(int id) {
-        WebCrawler page = pages.remove(id);
-        deadPages.put(id, page);
+        Products page = urls.remove(id);
+        deadUrls.put(id, page);
     }
 
     public void enableUrl(int id) {
-        WebCrawler page = deadPages.remove(id);
-        pages.put(id, page);
+        Products page = deadUrls.remove(id);
+        urls.put(id, page);
     }
 
 }

@@ -3,19 +3,19 @@
  * This class will be use to crawl all the data needed from internet
  */
 
-package com.somnath;
+package com.somnath.fkmon;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class WebCrawler {
+public class Products {
     private String url;
     private Document soup;
     private int expactedPrice;
 
 
-    public WebCrawler(String url, int expactedPrice) {
+    public Products(String url, int expactedPrice) {
         this.url = url;
         this.expactedPrice = expactedPrice;
     }

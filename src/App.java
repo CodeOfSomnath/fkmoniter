@@ -1,12 +1,18 @@
 
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
-import com.somnath.*;
+import com.somnath.fkmon.Monitor;
 
 public class App {
 
+    /**
+     * How to use this application, this function will print this message for user
+     * so user can use this message for checking the options
+     * there will be number from 0 to 5 till now.
+     * Anynumber can be choosed the program will respond for that number
+     * @author Somnath Nandi
+     * @version 0.1
+     */
     static void printUsage() {
         System.out.println("This is the options for moniter: ");
         System.out.println("\t1. Add Url");
