@@ -1,5 +1,8 @@
 
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import com.somnath.*;
 
 public class App {
@@ -17,9 +20,10 @@ public class App {
     public static void main(String[] args) throws Exception {
         Monitor mon = new Monitor();
         Scanner sc = new Scanner(System.in);
-        int option, id;
+        int option, id, price;
         String url;
         printUsage();
+
         while (true) {
             mon.refresh();
             System.out.println("\nEnter your option(0-5): ");
@@ -32,9 +36,13 @@ public class App {
                 // add url
                 System.out.println("Enter url:");
                 url = sc.nextLine();
-                mon.addUrl(url);
+                System.out.println("Enter expacted price:");
+                price = sc.nextInt();
+                mon.addUrl(url, price);
             } else if (option == 2) {
                 // show urls
+                System.out.println("\nPrice match Urls:");
+                mon.matchPriceUrls();
                 System.out.println("\nActive Urls:");
                 mon.display();
                 System.out.println("\nDead Urls:");
@@ -53,6 +61,9 @@ public class App {
             } else if (option == 5) {
                 // print usage
                 printUsage();
+            } 
+            else {
+                System.out.println("Enter a correct option !!");
             }
         }
 

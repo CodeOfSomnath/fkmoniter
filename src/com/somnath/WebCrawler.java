@@ -12,11 +12,21 @@ import org.jsoup.select.Elements;
 public class WebCrawler {
     private String url;
     private Document soup;
+    private int expactedPrice;
 
-    public WebCrawler(String url) {
+
+    public WebCrawler(String url, int expactedPrice) {
         this.url = url;
+        this.expactedPrice = expactedPrice;
     }
 
+    public int getExpactedPrice() {
+        return expactedPrice;
+    }
+
+    public void setExpactedPrice(int expactedPrice) {
+        this.expactedPrice = expactedPrice;
+    }
 
     public void getPage() throws Exception {
         Document soup = Jsoup.connect(this.url)
@@ -38,18 +48,23 @@ public class WebCrawler {
 
     }
 
-    public void refresh() throws Exception {
+    public void refresh() {
         // it is just look good
-        this.getPage();
+        try {
+            this.getPage();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
-    public int getCurrentPrice() throws Exception {
+    public int getCurrentPrice()  {
         this.refresh();
         Elements ems =  soup.select(".hl05eU div");
         return Integer.parseInt(ems.get(0).text().replaceAll("₹", "").replaceAll(",", ""));
     }
 
-    public int getFullPrice() throws Exception {
+    public int getFullPrice() {
         this.refresh();
         Elements ems =  soup.select(".hl05eU div");
         return Integer.parseInt(ems.get(1).text().replaceAll("₹", "").replaceAll(",", ""));

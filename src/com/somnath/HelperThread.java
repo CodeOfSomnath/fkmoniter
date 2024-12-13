@@ -2,6 +2,7 @@ package com.somnath;
 
 import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
+import javax.swing.JOptionPane;
 
 // This class for helping page refresh like task
 public class HelperThread extends Thread {
@@ -14,12 +15,12 @@ public class HelperThread extends Thread {
     }
 
     public HelperThread(CountDownLatch latch, WebCrawler crawler) {
-       page = crawler;
-       this.latch = latch;
+        page = crawler;
+        this.latch = latch;
     }
 
     public void refresh() {
-        
+
         try {
             page.updatePage();
             Thread.sleep(Duration.ofSeconds(10));
@@ -27,13 +28,11 @@ public class HelperThread extends Thread {
             // canExit = true;
             // e.printStackTrace();
         }
-    } 
+    }
 
     @Override
     public void run() {
-        while (!canExit) {
-            refresh();
-        }
+        refresh();
         latch.countDown();
     }
 }
